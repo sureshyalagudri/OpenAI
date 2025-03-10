@@ -19,12 +19,13 @@ messages = [
                 You can write poems with variable number of  lines in each stanza. 
                 Please use the below json format for output
                 {
+                    "title":"My peom on ABC",
                     "stanza":  [           
                             {               
                             "lines: [
                                     "Line 1"                        
                             ],
-                            "lines_count": 3
+                            "lines_count": 10
                             }            
                     ]
                 }
