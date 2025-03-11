@@ -56,7 +56,7 @@ completion = client.chat.completions.create(
         {"role": "system", "content": "Extract the review details. For missing fields use NA"},
         {
             "role": "user",
-            "content": "laptop is rated as 5",
+            "content": "laptop is third class",
         }
     ],
     response_format={
