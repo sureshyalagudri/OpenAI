@@ -24,6 +24,11 @@ review_schema = {
             "type": "number",
             "description": "The rating given to the product, usually on a scale from 1 to 5.",
         },
+        "rating_text": {
+            "type": "string",
+            "description": "The rating text.",
+            "enum": ["bad", "excellent", "worst", "ok", "good"]
+        },
         "review_text": {
             "type": "string",
             "description": "The detailed review text provided by the reviewer.",
@@ -37,7 +42,7 @@ review_schema = {
             "description": "Indicates whether input text is a review or not"
         }
     },
-    "required": ["product_summary", "rating", "review_text", "reviewer", "isReview"],
+    "required": ["product_summary", "rating", "rating_text", "review_text", "reviewer", "isReview"],
     "additionalProperties": False,
 }
 
@@ -51,7 +56,7 @@ completion = client.chat.completions.create(
         {"role": "system", "content": "Extract the review details. For missing fields use NA"},
         {
             "role": "user",
-            "content": "test",
+            "content": "laptop is rated as 5",
         }
     ],
     response_format={
