@@ -70,7 +70,8 @@ completion = client.chat.completions.create(
             "role": "user",
             "content": """Suresh has reviewed laptop and mouse as 5 and 2.
             Bhavneet has reviewed chair as 1.
-            Kunal has reviewed bus and car as 3 and 5."""
+            Kunal has reviewed bus and car as 3 and 5.
+            Sandeep has not rated anything."""
         }
     ],
     response_format={
