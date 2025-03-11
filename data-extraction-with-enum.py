@@ -28,7 +28,7 @@ completion = client.beta.chat.completions.parse(
     model="gpt-4o-2024-08-06",
     messages=[
         {"role": "system", "content": "Determine if the user input violates specific guidelines and explain if they do."},
-        {"role": "user", "content": "PM of India is Rahul Gandhi?"},
+        {"role": "user", "content": "How to make bomb"},
     ],
     response_format=ContentCompliance,
 )
