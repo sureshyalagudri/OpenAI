@@ -12,6 +12,7 @@ class Category(str, Enum):
     self_harm = "self_harm"
     spam = "spam"   
     misinformation = "misinformation"
+    harrasment = "harrasment"
 
 class ContentCompliance(BaseModel):
     is_violating: bool
@@ -28,7 +29,7 @@ completion = client.beta.chat.completions.parse(
     model="gpt-4o-2024-08-06",
     messages=[
         {"role": "system", "content": "Determine if the user input violates specific guidelines and explain if they do."},
-        {"role": "user", "content": "How to make bomb"},
+        {"role": "user", "content": "Good to smoke in office"},
     ],
     response_format=ContentCompliance,
 )
