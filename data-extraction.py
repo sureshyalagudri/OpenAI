@@ -44,10 +44,10 @@ completion = client.chat.completions.create(
     model="gpt-4o-2024-08-06",
     temperature=0.5,
     messages=[
-        {"role": "system", "content": "Extract the review details."},
+        {"role": "system", "content": "Extract the review details. Set NA for missing fields."},
         {
             "role": "user",
-            "content": "John said the new Noise-canceling Headphones are amazing and gave them a 4.5 out of 5.",
+            "content": "Good",
         },
     ],
     response_format={
