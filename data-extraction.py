@@ -17,11 +17,17 @@ review_schema = {
     "type": "object",
     "properties": {
         "product_summary": {
-            "type": "string",
+            "type": "array",
+            "items":{ 
+                "type":"string"
+            },
             "description": "A brief summary of the product being reviewed.",
         },
         "rating": {
-            "type": "number",
+            "type": "array",
+            "items":{
+                 "type":"number"
+            },
             "description": "The rating given to the product, usually on a scale from 1 to 5.",
         },
         "rating_text": {
@@ -56,7 +62,7 @@ completion = client.chat.completions.create(
         {"role": "system", "content": "Extract the review details. For missing fields use NA"},
         {
             "role": "user",
-            "content": "laptop is third class",
+            "content": "Suresh has reviewed laptop and mouse as 5 and 2",
         }
     ],
     response_format={
