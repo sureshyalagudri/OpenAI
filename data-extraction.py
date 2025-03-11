@@ -32,8 +32,12 @@ review_schema = {
             "type": "string",
             "description": "The name or identifier of the reviewer.",
         },
+        "isReview":{
+            "type": "boolean",
+            "description": "Indicates whether input text is a review or not"
+        }
     },
-    "required": ["product_summary", "rating", "review_text", "reviewer"],
+    "required": ["product_summary", "rating", "review_text", "reviewer", "isReview"],
     "additionalProperties": False,
 }
 
@@ -44,11 +48,11 @@ completion = client.chat.completions.create(
     model="gpt-4o-2024-08-06",
     temperature=0.5,
     messages=[
-        {"role": "system", "content": "Extract the review details. Set NA for missing fields."},
+        {"role": "system", "content": "Extract the review details. For missing fields use NA"},
         {
             "role": "user",
-            "content": "Good",
-        },
+            "content": "test",
+        }
     ],
     response_format={
         "type": "json_schema",
