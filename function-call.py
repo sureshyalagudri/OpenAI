@@ -15,7 +15,9 @@ client = OpenAI(default_headers=headers)
 #*********Step1: Create a function to get the weather*********
 # The function will take latitude and longitude as input and return the current temperature in celsius.
 def get_weather(latitude, longitude):
+    print(f"Getting weather for {latitude}, {longitude}")
     response = requests.get(f"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m")
+    print("API response: ", response.json())
     data = response.json()
     return data['current']['temperature_2m']
 
@@ -40,7 +42,7 @@ tools = [{
     "function": get_weather_schema
 }]
 
-messages = [{"role": "user", "content": "Based on the weather in Pune, can you suggest me the clothing I should wear?"}]
+messages = [{"role": "user", "content": "Based on the weather in Pune , Mumbai and Hydarabad, can you suggest me the clothing I should wear in respective cities?"}]
 completion = client.chat.completions.create(
     model="gpt-4o-2024-08-06",
     messages=messages,
@@ -50,20 +52,19 @@ messages.append(completion.choices[0].message)  # append model's function call m
 
 #*********Step3: Model decides to call function(s) – model returns the name and input arguments.*********
 # Extract the arguments from the function
-tool_call = completion.choices[0].message.tool_calls[0]
-print(tool_call.function.name)
-args = json.loads(tool_call.function.arguments)
-print(args) 
-
-#********Step 4: Execute function code – parse the model's response and handle function calls.*********
-result = get_weather(args["latitude"], args["longitude"])
-
-#********Step 5: Supply model with results – so it can incorporate them into its final response.*********
-messages.append({   # append result message
-    "role": "tool",
-    "tool_call_id": tool_call.id,
-    "content": str(result)
-})
+if completion.choices[0].message.tool_calls:
+    for tool_call  in completion.choices[0].message.tool_calls:
+        print(tool_call.function.name)
+        args = json.loads(tool_call.function.arguments)
+        print(args) 
+        result = get_weather(args["latitude"], args["longitude"])
+        messages.append({   # append result message
+            "role": "tool",
+            "tool_call_id": tool_call.id,
+            "content": str(result)
+        })
+else:
+    print("No tool calls were made by the model.")
 
 completion_2 = client.chat.completions.create(
     model="gpt-4o-2024-08-06",
