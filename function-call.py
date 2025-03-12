@@ -17,7 +17,7 @@ client = OpenAI(default_headers=headers)
 def get_weather(latitude, longitude):
     print(f"Getting weather for {latitude}, {longitude}")
     response = requests.get(f"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m")
-    print("API response: ", response.json())
+    print("API call is successful")
     data = response.json()
     return data['current']['temperature_2m']
 
@@ -42,7 +42,7 @@ tools = [{
     "function": get_weather_schema
 }]
 
-messages = [{"role": "user", "content": "Based on the weather in Pune , Mumbai and Hydarabad, can you suggest me the clothing I should wear in respective cities?"}]
+messages = [{"role": "user", "content": "Based on the weather in Pune , Mumbai, XYZ and Hydarabad, can you suggest me the clothing I should wear in respective cities?"}]
 completion = client.chat.completions.create(
     model="gpt-4o-2024-08-06",
     messages=messages,
@@ -65,6 +65,7 @@ if completion.choices[0].message.tool_calls:
         })
 else:
     print("No tool calls were made by the model.")
+    print(completion.choices[0].message.content)
 
 completion_2 = client.chat.completions.create(
     model="gpt-4o-2024-08-06",
