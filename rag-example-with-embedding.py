@@ -30,7 +30,7 @@ OPENSEARCH_CONFIG = {
     "ssl_show_warn": False
 }
 
-INDEX_NAME = "funfacts"
+INDEX_NAME = "gamefacts"
 
 # Function to retrieve documents from OpenSearch based on cosine similarity
 def retrieve_matching_documents(opensearch_client, user_query, limit=3):
@@ -62,8 +62,8 @@ def generate_chat_response(user_query, retrieved_maching_string):
     completion = openai_client.chat.completions.create(
         model="gpt-4o-2024-08-06",
         messages=[
-            {"role": "system", "content": "You are a helpful assistant specialized about Animals. Provide your response base on information only in the context."},
-            #{"role": "system", "content": "You are a helpful assistant specialized about Animals. Provide your response including the information not necessary in the context."},
+            #{"role": "system", "content": "You are a helpful assistant specialized about games. Provide your response base on information only in the context."},
+            {"role": "system", "content": "You are a helpful assistant specialized about Animals. Provide your response including the information not necessary in the context."},
             {"role": "user", "content": f"Question: {user_query}  \n Context: {retrieved_maching_string} "},            
         ]
     )    
@@ -72,7 +72,7 @@ def generate_chat_response(user_query, retrieved_maching_string):
 # Main function for testing
 def main():
     # User query for information
-    user_query = "I want to learn about animal sleep patterns"
+    user_query = "I want to learn about indian cricket team"
 
     # Connect to OpenSearch
     opensearch_client = OpenSearch(**OPENSEARCH_CONFIG)
